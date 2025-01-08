@@ -15,21 +15,25 @@ public class InventoryController {
     @Autowired
     private InventoryManager inventoryManager;
 
+    // NOTE: Health check
     @GetMapping("/health")
     public String healthCheck() {
         return "Service running!";
     }
 
+    // NOTE: Get all products
     @GetMapping("/getProducts")
     public List<ProductInfo> getAllProducts() {
         return inventoryManager.getAllProducts();
     }
 
+    // NOTE: Get amount for product by UUID
     @GetMapping("/getAmount")
     public long getAmount(@RequestBody UUID id) {
         return inventoryManager.getAmount(id);
     }
 
+    // NOTE: Set amount for product by UUID
     @PostMapping("/setAmount")
     public UUID setAmount(@RequestBody UUID id, @RequestBody long amount) {
         if (amount < 0) {
@@ -37,4 +41,5 @@ public class InventoryController {
         }
         return inventoryManager.setAmount(id, amount);
     }
+    
 }
