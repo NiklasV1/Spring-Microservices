@@ -1,5 +1,7 @@
 package com.example.inventoryService;
 
+import com.example.inventoryService.records.ProductCreationRecord;
+import com.example.inventoryService.records.ProductRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,7 @@ public class InventoryController {
 
     // NOTE: Get all products
     @GetMapping("/getProducts")
-    public List<ProductInfo> getAllProducts() {
+    public List<ProductRecord> getAllProducts() {
         return inventoryManager.getAllProducts();
     }
 
@@ -43,8 +45,8 @@ public class InventoryController {
     }
 
     @PostMapping(value = "/registerProduct", consumes = "application/json", produces = "application/json")
-    public UUID registerProduct(@RequestBody ProductCreationRecord record) {
-        return inventoryManager.registerProduct(record.name(), record.price());
+    public UUID registerProduct(@RequestBody ProductCreationRecord input) {
+        return inventoryManager.registerProduct(input.name(), input.price());
     }
 
 }

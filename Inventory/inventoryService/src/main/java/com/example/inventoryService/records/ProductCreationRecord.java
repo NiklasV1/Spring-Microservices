@@ -1,4 +1,4 @@
-package com.example.inventoryService;
+package com.example.inventoryService.records;
 
 public record ProductCreationRecord(String name, double price) {
 }

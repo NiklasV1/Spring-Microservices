@@ -1,5 +1,6 @@
 package com.example.inventoryService;
 
+import com.example.inventoryService.records.ProductRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,13 @@ public class InventoryManager {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<ProductInfo> getAllProducts() {
+    public List<ProductRecord> getAllProducts() {
         List<Product> products = productRepository.findAll();
-        List<ProductInfo> productInfos = new ArrayList<>();
+        List<ProductRecord> productRecords = new ArrayList<>();
         for (Product product : products) {
-            productInfos.add(new ProductInfo(product.getId(), product.getName(), product.getAmount(), product.getPrice()));
+            productRecords.add(new ProductRecord(product.getId(), product.getName(), product.getAmount(), product.getPrice()));
         }
-        return productInfos;
+        return productRecords;
     }
 
     public long getAmount(UUID id) {
