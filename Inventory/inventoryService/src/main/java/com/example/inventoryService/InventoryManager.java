@@ -29,6 +29,7 @@ public class InventoryManager {
     }
 
     public UUID setAmount(UUID id, long amount) {
+        ensurePositiveAmount(amount);
         Product product = productRepository.getReferenceById(id);
         product.setAmount(amount);
         productRepository.save(product);
@@ -43,9 +44,25 @@ public class InventoryManager {
         return product.getId();
     }
 
+    public UUID unregisterProduct(UUID id) {
+        Product product = productRepository.getReferenceById(id);
+        if (product.getAmount() > 0) {
+            throw new IllegalArgumentException("Product amount must be 0 to unregister!");
+        }
+        UUID deletedId = product.getId();
+        productRepository.delete(product);
+        return deletedId;
+    }
+
     public void ensurePositivePrice(double price) {
         if (price < 0) {
             throw new IllegalArgumentException("Price can not be negative!");
+        }
+    }
+
+    public void ensurePositiveAmount(long amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount can not be negative!");
         }
     }
 

@@ -1,7 +1,9 @@
 package com.example.inventoryService;
 
+import com.example.inventoryService.records.ProductAmountRecord;
 import com.example.inventoryService.records.ProductCreationRecord;
 import com.example.inventoryService.records.ProductRecord;
+import com.example.inventoryService.records.ProductUUIDRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,23 +32,25 @@ public class InventoryController {
     }
 
     // NOTE: Get amount for product by UUID
-    @GetMapping("/getAmount")
-    public long getAmount(@RequestBody UUID id) {
-        return inventoryManager.getAmount(id);
+    @GetMapping(value = "/getAmount", consumes = "application/json", produces = "application/json")
+    public long getAmount(@RequestBody ProductUUIDRecord input) {
+        return inventoryManager.getAmount(input.id());
     }
 
     // NOTE: Set amount for product by UUID
     @PostMapping("/setAmount")
-    public UUID setAmount(@RequestBody UUID id, @RequestBody long amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Amount can not be negative!");
-        }
-        return inventoryManager.setAmount(id, amount);
+    public UUID setAmount(@RequestBody ProductAmountRecord input) {
+        return inventoryManager.setAmount(input.id(), input.amount());
     }
 
+    // NOTE: Register new product
     @PostMapping(value = "/registerProduct", consumes = "application/json", produces = "application/json")
     public UUID registerProduct(@RequestBody ProductCreationRecord input) {
         return inventoryManager.registerProduct(input.name(), input.price());
     }
 
+    @PostMapping(value = "/unregisterProduct", consumes = "application/json", produces = "application/json")
+    public UUID unregisterProduct(@RequestBody ProductUUIDRecord input) {
+        return inventoryManager.unregisterProduct(input.id());
+    }
 }
