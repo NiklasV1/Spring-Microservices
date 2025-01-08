@@ -54,6 +54,19 @@ public class InventoryManager {
         return deletedId;
     }
 
+    public double getPrice(UUID id) {
+        Product product = productRepository.getReferenceById(id);
+        return product.getPrice();
+    }
+
+    public UUID setPrice(UUID id, double price) {
+        ensurePositivePrice(price);
+        Product product = productRepository.getReferenceById(id);
+        product.setPrice(price);
+        productRepository.save(product);
+        return product.getId();
+    }
+
     public void ensurePositivePrice(double price) {
         if (price < 0) {
             throw new IllegalArgumentException("Price can not be negative!");

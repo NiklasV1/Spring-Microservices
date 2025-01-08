@@ -2,6 +2,7 @@ package com.example.inventoryService;
 
 import com.example.inventoryService.records.ProductAmountRecord;
 import com.example.inventoryService.records.ProductCreationRecord;
+import com.example.inventoryService.records.ProductPriceRecord;
 import com.example.inventoryService.records.ProductRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,5 +50,17 @@ public class InventoryController {
     @PostMapping("/unregisterProduct")
     public UUID unregisterProduct(@RequestParam UUID id) {
         return inventoryManager.unregisterProduct(id);
+    }
+
+    // NOTE: Get price of product
+    @GetMapping("/getPrice")
+    public double getPrice(@RequestParam UUID id) {
+        return inventoryManager.getPrice(id);
+    }
+
+    //NOTE: Set price of product
+    @PostMapping("/setPrice")
+    public UUID setPrice(@RequestBody ProductPriceRecord input) {
+        return inventoryManager.setPrice(input.id(), input.price());
     }
 }
