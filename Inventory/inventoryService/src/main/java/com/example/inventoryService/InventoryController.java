@@ -3,12 +3,8 @@ package com.example.inventoryService;
 import com.example.inventoryService.records.ProductAmountRecord;
 import com.example.inventoryService.records.ProductCreationRecord;
 import com.example.inventoryService.records.ProductRecord;
-import com.example.inventoryService.records.ProductUUIDRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,9 +28,9 @@ public class InventoryController {
     }
 
     // NOTE: Get amount for product by UUID
-    @GetMapping(value = "/getAmount", consumes = "application/json", produces = "application/json")
-    public long getAmount(@RequestBody ProductUUIDRecord input) {
-        return inventoryManager.getAmount(input.id());
+    @GetMapping("/getAmount")
+    public long getAmount(@RequestParam UUID id) {
+        return inventoryManager.getAmount(id);
     }
 
     // NOTE: Set amount for product by UUID
@@ -49,8 +45,9 @@ public class InventoryController {
         return inventoryManager.registerProduct(input.name(), input.price());
     }
 
-    @PostMapping(value = "/unregisterProduct", consumes = "application/json", produces = "application/json")
-    public UUID unregisterProduct(@RequestBody ProductUUIDRecord input) {
-        return inventoryManager.unregisterProduct(input.id());
+    // NOTE: Unregister products with amount == 0
+    @PostMapping("/unregisterProduct")
+    public UUID unregisterProduct(@RequestParam UUID id) {
+        return inventoryManager.unregisterProduct(id);
     }
 }
