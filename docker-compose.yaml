@@ -1,0 +1,15 @@
+services:
+  inventory-database:
+    image: inventory-database-postgres
+    pull_policy: never
+    container_name: inventory-database-postgres
+    build:
+      context: ./Inventory/Database/
+      dockerfile: Dockerfile
+    volumes:
+      - inventory-postgres-data:/var/lib/postgresql/data
+    env_file:
+      - ./Inventory/Database/database.env
+
+volumes:
+  inventory-postgres-data:
