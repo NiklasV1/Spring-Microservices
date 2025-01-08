@@ -21,6 +21,15 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
+    public Product() {
+    }
+
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+        this.amount = 0;
+    }
+
     public UUID getId() {
         return id;
     }

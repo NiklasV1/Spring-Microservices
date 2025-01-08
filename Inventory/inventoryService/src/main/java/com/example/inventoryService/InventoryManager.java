@@ -33,4 +33,24 @@ public class InventoryManager {
         productRepository.save(product);
         return product.getId();
     }
+
+    public UUID registerProduct(String name, double price) {
+        ensureMaxStringLength(name, 100);
+        ensurePositivePrice(price);
+        Product product = new Product(name, price);
+        productRepository.save(product);
+        return product.getId();
+    }
+
+    public void ensurePositivePrice(double price) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price can not be negative!");
+        }
+    }
+
+    public void ensureMaxStringLength(String input, int maxLength) {
+        if (input.length() > maxLength) {
+            throw new IllegalArgumentException("String is too long!");
+        }
+    }
 }

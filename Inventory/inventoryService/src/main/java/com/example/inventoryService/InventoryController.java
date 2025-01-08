@@ -41,5 +41,10 @@ public class InventoryController {
         }
         return inventoryManager.setAmount(id, amount);
     }
-    
+
+    @PostMapping(value = "/registerProduct", consumes = "application/json", produces = "application/json")
+    public UUID registerProduct(@RequestBody ProductCreationRecord record) {
+        return inventoryManager.registerProduct(record.name(), record.price());
+    }
+
 }
