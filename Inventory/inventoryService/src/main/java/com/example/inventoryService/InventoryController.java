@@ -11,9 +11,16 @@ public class InventoryController {
 
     @Autowired
     private InventoryManager inventoryManager;
+    
 
     @GetMapping("/getProducts")
     public List<ProductInfo> getAllProducts() {
         return inventoryManager.getAllProducts();
+    }
+
+    @GetMapping("/getAmount")
+    public long getAmount() {
+        // TODO
+        return 0;
     }
 }
