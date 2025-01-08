@@ -1,4 +1,6 @@
 package com.example.inventoryService;
 
-public record ProductInfo() {
+import java.util.UUID;
+
+public record ProductInfo(UUID id, String name, long amount, double price) {
 }
