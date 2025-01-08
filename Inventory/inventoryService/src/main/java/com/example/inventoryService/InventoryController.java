@@ -16,6 +16,16 @@ public class InventoryController {
     @Autowired
     private InventoryManager inventoryManager;
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleIllegalArgumentException(IllegalArgumentException exception) {
+        return exception.getMessage();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handleUnexpectedExceptions() {
+        return "Unexpected Server Exception!";
+    }
+
     // NOTE: Health check
     @GetMapping("/health")
     public String healthCheck() {
