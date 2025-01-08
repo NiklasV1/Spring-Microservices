@@ -11,7 +11,11 @@ public class InventoryController {
 
     @Autowired
     private InventoryManager inventoryManager;
-    
+
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "Service running!";
+    }
 
     @GetMapping("/getProducts")
     public List<ProductInfo> getAllProducts() {
